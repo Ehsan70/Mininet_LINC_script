@@ -2,3 +2,4 @@ Topology.json
 TopoConfig.json
 
 *.pyc
+.idea/
