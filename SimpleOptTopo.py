@@ -59,7 +59,6 @@ if __name__ == '__main__':
     net = MininetOE(topo=SmallOptTopo(), controller=None,
                     autoSetMacs=True)
     net.addControllers(controllers)
-    input("Press Enter to continue ...")
     net.start()
     CLI(net)
     net.stop()
