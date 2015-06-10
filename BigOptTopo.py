@@ -22,7 +22,7 @@ class BigOptTopo(Topo):
         self.pkt = [] 
         for p in range(0,6):
           self.pkt.append(self.addSwitch('pkt-00'+str(p), dpid='000000000000000'+str(p), annotations={"latitude": 53.6, "longitude": -102.3-(5*p)}))
-        print ("Size of opt array is "+str(len(self.pkt)))
+        print ("Size of pkt array is "+str(len(self.pkt)))
 
         # Connecting two optical switches
         try:
@@ -33,7 +33,7 @@ class BigOptTopo(Topo):
         
         # Connecting pkt switches to optical ones
         self.makePktOptLink(0,0)
-        self.makePktOptLink(0,1)
+        self.makePktOptLink(1,0)
         self.makePktOptLink(2,1)
         self.makePktOptLink(3,2)
         self.makePktOptLink(4,2)
