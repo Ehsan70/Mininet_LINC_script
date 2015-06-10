@@ -14,14 +14,14 @@ class BigOptTopo(Topo):
         self.opt_ann = [] 
         self.opt = [] 
         for o in range(0, 3):
-          self.opt_ann.append({"latitude": 30.6+(o*5), "longitude": -122.3, "optical.regens": 0})
+          self.opt_ann.append({"latitude": 33.6, "longitude": -112.3+(o*10), "optical.regens": 0})
           self.opt.append(self.addSwitch('OPT-00'+str(o), dpid='0000ffffffffff0'+str(o) , annotations=self.opt_ann[o], cls=OpticalSwitch))
    
         print ("Size of opt array is "+str(len(self.opt)))
         # Adding packet switches to the network 
         self.pkt = [] 
         for p in range(0,6):
-          self.pkt.append(self.addSwitch('pkt-00'+str(p), dpid='000000000000000'+str(p), annotations={"latitude": 53.6, "longitude": -102.3-(5*p)}))
+          self.pkt.append(self.addSwitch('pkt-00'+str(p), dpid='000000000000000'+str(p), annotations={"latitude": 41.6, "longitude": -122.3+(5*p)}))
         print ("Size of pkt array is "+str(len(self.pkt)))
 
         # Connecting two optical switches
