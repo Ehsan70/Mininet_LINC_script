@@ -3,3 +3,5 @@ TopoConfig.json
 
 *.pyc
 .idea/
+
+*~
