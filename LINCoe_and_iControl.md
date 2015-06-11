@@ -185,20 +185,58 @@ So now we have created the path from tap0 to tap1. Lets put some packet in tap0 
     ```erlang
     (icontrol@127.0.0.1)12> iof:flows(SwitchKey).
     ```  
- In the response from controller the two numbers between a flow cookie and `ofp_match` indicate packet count and byte count appropriately:
-    ```erlang
-    {ofp_flow_stats_reply,[],
-        [{ofp_flow_stats,0,57,498711000,100,0,0,[],
-             <<0,0,0,0,0,0,0,10>>,
-             0,0,  % <--------- packet and byte counters of the flow entry
-             {ofp_match,
-                 [{ofp_field,openflow_basic,in_port,false,<<0,0,0,1>>,undefined},
-                  {ofp_field,infoblox,och_sigtype,false,<<"\n">>,undefined},
-                  {ofp_field,infoblox,och_sigid,false, <<0,0,0,23,0,0>>, undefined}]},
-             [{ofp_instruction_apply_actions,2,
-                  [{ofp_action_output,16,2,no_buffer}]}]}]}
-
+    For example, I get the following message when I run `(icontrol@127.0.0.1)>  iof:flows(1). `
     ```
+    {ofp_flow_stats_reply,[],
+    [{ofp_flow_stats,0,4,424046000,100,0,0,[],
+         <<0,0,0,0,0,0,0,10>>,
+         0,0,               % <--------- packet and byte counters of the flow entry
+         {ofp_match,
+             [{ofp_field,openflow_basic,in_port,false,<<0,0,0,1>>,undefined},
+              {ofp_field,infoblox,och_sigtype,false,<<"\n">>,undefined},
+              {ofp_field,infoblox,och_sigid,false,
+                  <<1,2,0,20,0,1>>,
+                  undefined}]},
+         [{ofp_instruction_apply_actions,2,
+              [{ofp_action_experimenter,99,7636849,
+                   {ofp_action_set_field,13,
+                       {ofp_field,openflow_basic,och_sigid,false,
+                           <<1,2,0,20,0,1>>,
+                           undefined}}},
+               {ofp_action_output,16,2,no_buffer}]}]}]}
+    ```
+    I get the following message when I run `(icontrol@127.0.0.1)>  iof:flows(2). `
+    ```
+    {ofp_flow_stats_reply,[],
+    [{ofp_flow_stats,0,6,688447000,100,0,0,[],
+         <<0,0,0,0,0,0,0,10>>,
+         0,0,
+         {ofp_match,
+             [{ofp_field,openflow_basic,in_port,false,<<0,0,0,1>>,undefined}]},
+         [{ofp_instruction_apply_actions,2,
+              [{ofp_action_experimenter,99,7636849,
+                   {ofp_action_set_field,13,
+                       {ofp_field,openflow_basic,och_sigid,false,
+                           <<1,2,0,20,0,1>>,
+                           undefined}}},
+               {ofp_action_output,16,2,no_buffer}]}]}]}
+    ```
+    I get the following message when I run `(icontrol@127.0.0.1)>  iof:flows(3). `
+    ```
+{ofp_flow_stats_reply,[],
+    [{ofp_flow_stats,0,115,967092000,100,0,0,[],
+         <<0,0,0,0,0,0,0,10>>,
+         0,0,
+         {ofp_match,
+             [{ofp_field,openflow_basic,in_port,false,<<0,0,0,1>>,undefined},
+              {ofp_field,infoblox,och_sigtype,false,<<"\n">>,undefined},
+              {ofp_field,infoblox,och_sigid,false,
+                  <<1,2,0,20,0,1>>,
+                  undefined}]},
+         [{ofp_instruction_apply_actions,2,
+              [{ofp_action_output,16,2,no_buffer}]}]}]}
+    ```
+ 
  4. Send ping through tap0  
 
     `$ sudo tcpreplay -i tap0 LINC-Switch/pcap.data/ping.pcap`
