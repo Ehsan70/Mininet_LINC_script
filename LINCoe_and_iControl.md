@@ -144,11 +144,17 @@ Let's create that path:
 Install a flow on switch 1 that will forward packets from port 1 to the optical link connected to port 2 using wavelength 20. Remeber that port 1 of switch with key 2 is connected to tap0. 
 Note that switch with key=2 has a switch id=1. Switch id is the one that you set in the `sys.config` file. -> I don't know why they are different.  
 Here switch with key 2 and switch id of 1 has one connection to a tap interface and one connection to optical link.
+
+
+
 ```
 (icontrol@127.0.0.1)> iof:oe_flow_ww(1,100,1,20,2,20).
 ```
 For switch with key 1, this will Install a flow on switch 2 that will take optical data from channel 20 on port 1 and put it on port 2 into the same channel. 
 Here switch with key 1 and switch id of 2 is the middle switch. So there is no tap interface connected to it and has two optical connection. That's why we use `oe_flow_ww`. 
+
+
+
 ```
 (icontrol@127.0.0.1)> iof:oe_flow_wt(3,100,1,20,2).
 ```
@@ -168,8 +174,10 @@ Dumps flows in switch with key equal to <Switch key>.
 iof:flows(<Switch key>).  
 ```
 
-
-
+# Additional Sources #
+This tutorial was made from a comnination of the following tutorials: 
+https://github.com/FlowForwarding/LINC-Switch/blob/master/docs/optical_extension.md 
+https://github.com/FlowForwarding/loom/tree/master/icontrol 
 
 
 
