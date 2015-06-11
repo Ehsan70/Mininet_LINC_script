@@ -165,7 +165,7 @@ For switch with key 2, this will Install a flow on switch 3 that will take optic
 ## Observing the traffic ##
 So now we have created the path from tap0 to tap1. Lets put some packet in tap0 and see if we can receive it on tap1. 
 
- 1. Examine the path. See if all the flows are installed properly using :
+ 1. Double check the path. See if all the flows are installed properly using :
  ```
  iof:flows(<Switch key>).
  ```
@@ -213,7 +213,11 @@ iof:flows(<Switch key>).
 
 # Additional Sources #
 This tutorial was made from a comnination of the following tutorials: 
+
+
 https://github.com/FlowForwarding/LINC-Switch/blob/master/docs/optical_extension.md 
+
+
 https://github.com/FlowForwarding/loom/tree/master/icontrol 
 
 
