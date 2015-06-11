@@ -127,8 +127,8 @@ as following:
  {sync,
   [{excluded_modules, [procket]}]}].
 ```
+#### Reminder ####
 
-####Reminder#### 
 To assign a port to a logical switch two requirements has to be met:
  1. the port has to be defined in the `capable_switch_ports`.
  2. the port has to be listed in the `ports` for the logical switch.
