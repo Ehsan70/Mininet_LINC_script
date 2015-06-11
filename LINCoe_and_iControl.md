@@ -55,15 +55,6 @@ sudo ip link set dev tap1 up
 ```
 
 ## LINC-OE configuration ##
-Reminde: 
-To assign a port to a logical switch two requirements has to be met:
- a. the port has to be defined in the `capable_switch_ports`,
- b. the port has to be listed in the `ports` for the logical switch.
- 
- Note that logical switch port numbers do not have to be the same as capable switch port numbers. If the `port_no` option is not provided it defaults to capable switch port number.
-  
-  If `port_name` option is not provided it defaults to `Port{LOGICAL_SWITCH_PORT_NO}` or `Port{CAPABLE_SWITCH_PORT_NO}` if logical port number is not provided.
-  
   
 `rel/files/sys.config` file for the network shown above should looks
 as following:
@@ -136,6 +127,17 @@ as following:
  {sync,
   [{excluded_modules, [procket]}]}].
 ```
+
+------------------------------------------
+Reminder: 
+To assign a port to a logical switch two requirements has to be met:
+ a. the port has to be defined in the `capable_switch_ports`,
+ b. the port has to be listed in the `ports` for the logical switch.
+ 
+ Note that logical switch port numbers do not have to be the same as capable switch port numbers. If the `port_no` option is not provided it defaults to capable switch port number.
+  
+  If `port_name` option is not provided it defaults to `Port{LOGICAL_SWITCH_PORT_NO}` or `Port{CAPABLE_SWITCH_PORT_NO}` if logical port number is not provided.
+
 
 ## Starting LINC-OE ##
   Build LINC-Switch and run it:
