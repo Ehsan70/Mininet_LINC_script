@@ -3,7 +3,7 @@ Thhis document has two portions:
 1. setting up the iControl 
 2. setting up the linc-oe
 ------------------------------------------------------------------
-1. setting up the iControl
+# 1. setting up/running the iControl #
 If you haven't clone the LOOM repo, do the following: 
 	git clone https://github.com/FlowForwarding/loom.git
 
@@ -23,6 +23,8 @@ Run:
 This document shows how to use LINC-Switch to simulate simple optical
 network like on the diagram below:
 
+# 2. setting up the linc-oe #
+Here is the topology: 
 ```
            |       (1)       |      |      (2)       |      |       (3)       |
 [tap0]-----|[1]  <PO-SW>  [2]|~~~~~~|[1]  <O-SW>  [2]|~~~~~~|[1]  <PO-SW>  [2]|-----[tap1]
@@ -38,19 +40,25 @@ network like on the diagram below:
 > * [tapX] - is the operating system tap interface number X
 > * ---- line is the packet link
 > * ~~~~ line is the optical link
-------------------------------------------------------------------
-To run the simulation two tap interfaces are required. Following commands show how to configure them in Linux:
-
-	sudo tunctl -t tap0
-	sudo tunctl -t tap1
-	sudo ip link set dev tap0 up
-	sudo ip link set dev tap1 up
 
 ------------------------------------------------------------------
-LINC-OE configuration
+## Operating system configuration ##
+To run the simulation two tap interfaces are required. Following commands
+show how to configure them in Linux:
+```shell
+sudo tunctl -t tap0
+sudo tunctl -t tap1
+sudo ip link set dev tap0 up
+sudo ip link set dev tap1 up
+```
 
-rel/files/sys.config file for the network shown above should looks as following:
+------------------------------------------------------------------
 
+## LINC-OE configuration ##
+
+`rel/files/sys.config` file for the network shown above should looks
+as following:
+```erlang
 [{linc,
   [{of_config,disabled},
    {capable_switch_ports,
@@ -118,6 +126,8 @@ rel/files/sys.config file for the network shown above should looks as following:
    {error_logger_mf_maxfiles,5}]},
  {sync,
   [{excluded_modules, [procket]}]}].
+```
+
 ------------------------------------------------------------------
 Starting LINC-OE
   Build LINC-Switch and run it:
