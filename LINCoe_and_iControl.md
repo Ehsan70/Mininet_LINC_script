@@ -2,24 +2,26 @@ Start LINC-OE simple optical topology with iControl.
 Thhis document has two portions: 
 1. setting up the iControl 
 2. setting up the linc-oe
-------------------------------------------------------------------
+
+
+
+
 # 1. setting up/running the iControl #
-If you haven't clone the LOOM repo, do the following: 
+If you haven't clone the LOOM repo, do the following:
+```shell
 	git clone https://github.com/FlowForwarding/loom.git
-
-------------------------------------------------------------------
-
-Running icontrol
+```
+if you already have cloned the LOOM repo. Build and Run the icontrol: 
 
 Build icontrol:
-
+```shell
 	cd icontrol
 	make
-
+```
 Run:
-
+```shell
 	rel/icontrol/bin/icontrol console
-
+```
 This document shows how to use LINC-Switch to simulate simple optical
 network like on the diagram below:
 
@@ -41,7 +43,6 @@ Here is the topology:
 > * ---- line is the packet link
 > * ~~~~ line is the optical link
 
-------------------------------------------------------------------
 ## Operating system configuration ##
 To run the simulation two tap interfaces are required. Following commands
 show how to configure them in Linux:
@@ -51,8 +52,6 @@ sudo tunctl -t tap1
 sudo ip link set dev tap0 up
 sudo ip link set dev tap1 up
 ```
-
-------------------------------------------------------------------
 
 ## LINC-OE configuration ##
 
@@ -128,28 +127,46 @@ as following:
   [{excluded_modules, [procket]}]}].
 ```
 
-------------------------------------------------------------------
-Starting LINC-OE
+## Starting LINC-OE ##
   Build LINC-Switch and run it:
+  ```shell
   $ make rel && sudo rel/linc/bin/linc console
+```
+# Usage #
+So now you have both the linc-oe and iControll set up. Time to play with them.
 
+On one end you have a switch connected to Tap 0 and on the other end you have switch conneted to tap. Switches connect the two tap interfaces. But, If you put packets on one tap and monitoor the other tap, you will not recieve any packets. Why? Because iController needs to insert/instal flows on switches so that a path is created from tap 0 to tap 1. 
+Let's create that path: 
 
-
-iof:oe_flow_tw(2,100,1,2,20).
-Install a flow on switch 1 that will forward packets from port 1 to the optical link connected to port 2 using wavelength 20  
-
-iof:oe_flow_ww(1,100,1,20,2,20).
-For switch with key 1, this will Install a flow on switch 2 that will take optical data from channel 20 on port 1 and put it on port 2 into the same channel 
-
-iof:oe_flow_wt(3,100,1,20,2).
+```
+(icontrol@127.0.0.1)> iof:oe_flow_tw(2,100,1,2,20).
+```
+Install a flow on switch 1 that will forward packets from port 1 to the optical link connected to port 2 using wavelength 20. Remeber that port 1 of switch with key 2 is connected to tap0. 
+Note that switch with key=2 has a switch id=1. Switch id is the one that you set in the `sys.config` file. -> I don't know why they are different.  
+Here switch with key 2 and switch id of 1 has one connection to a tap interface and one connection to optical link.
+```
+(icontrol@127.0.0.1)> iof:oe_flow_ww(1,100,1,20,2,20).
+```
+For switch with key 1, this will Install a flow on switch 2 that will take optical data from channel 20 on port 1 and put it on port 2 into the same channel. 
+Here switch with key 1 and switch id of 2 is the middle switch. So there is no tap interface connected to it and has two optical connection. That's why we use `oe_flow_ww`. 
+```
+(icontrol@127.0.0.1)> iof:oe_flow_wt(3,100,1,20,2).
+```
 For switch with key 2, this will Install a flow on switch 3 that will take optical data from channel 20 on port 1 and convert it back to packet data and send it through port 2 
 
 
+## Useful Funtions: ##
+### Clearing flows in specific switch ###
+Clears flows in switch with key equal to <Switch key>.
+ ```
+ iof:clear_flows(<Switch key>). 
+ ```
 
-
-
-
-
+### Flows ###
+Dumps flows in switch with key equal to <Switch key>.
+```
+iof:flows(<Switch key>).  
+```
 
 
 
