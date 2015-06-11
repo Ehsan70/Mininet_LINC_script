@@ -1,7 +1,8 @@
 Start LINC-OE simple optical topology with iControl. 
 Thhis document has two portions: 
-1. setting up the iControl 
-2. setting up the linc-oe
+
+ 1. setting up the iControl 
+ 2. setting up the linc-oe
 
 
 
