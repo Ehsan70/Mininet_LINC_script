@@ -1,7 +1,9 @@
 Start LINC-OE simple optical topology with iControl. 
-
+Thhis document has two portions: 
+1. setting up the iControl 
+2. setting up the linc-oe
 ------------------------------------------------------------------
-
+1. setting up the iControl
 If you haven't clone the LOOM repo, do the following: 
 	git clone https://github.com/FlowForwarding/loom.git
 
@@ -18,7 +20,24 @@ Run:
 
 	rel/icontrol/bin/icontrol console
 
+This document shows how to use LINC-Switch to simulate simple optical
+network like on the diagram below:
 
+```
+           |       (1)       |      |      (2)       |      |       (3)       |
+[tap0]-----|[1]  <PO-SW>  [2]|~~~~~~|[1]  <O-SW>  [2]|~~~~~~|[1]  <PO-SW>  [2]|-----[tap1]
+ (OS)      |     (LINC)      |      |     (LINC)     |      |      (LINC)     |      (OS)
+
+```
+
+> * (X) - is the logical switch number
+> * PO-SW - indicates packet-optical logical switch (i.e. a switch that
+> has Ethernet ports as well as optical ones)
+> * O-SW - indicates optical switch (i.e. a switch that has only internally
+> emulated optical ports and links between them)
+> * [tapX] - is the operating system tap interface number X
+> * ---- line is the packet link
+> * ~~~~ line is the optical link
 ------------------------------------------------------------------
 To run the simulation two tap interfaces are required. Following commands show how to configure them in Linux:
 
@@ -100,11 +119,20 @@ rel/files/sys.config file for the network shown above should looks as following:
  {sync,
   [{excluded_modules, [procket]}]}].
 ------------------------------------------------------------------
+Starting LINC-OE
   Build LINC-Switch and run it:
   $ make rel && sudo rel/linc/bin/linc console
 
 
 
+iof:oe_flow_tw(2,100,1,2,20).
+Install a flow on switch 1 that will forward packets from port 1 to the optical link connected to port 2 using wavelength 20  
+
+iof:oe_flow_ww(1,100,1,20,2,20).
+For switch with key 1, this will Install a flow on switch 2 that will take optical data from channel 20 on port 1 and put it on port 2 into the same channel 
+
+iof:oe_flow_wt(3,100,1,20,2).
+For switch with key 2, this will Install a flow on switch 3 that will take optical data from channel 20 on port 1 and convert it back to packet data and send it through port 2 
 
 
 
