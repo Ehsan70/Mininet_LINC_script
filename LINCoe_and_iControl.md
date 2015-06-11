@@ -53,6 +53,7 @@ Here is the topology:
 > * ---- line is the packet link
 > * ~~~~ line is the optical link
 
+
 ## Operating system configuration ##
 To run the simulation two tap interfaces are required. Following commands
 show how to configure them in Linux:
@@ -136,6 +137,10 @@ as following:
  {sync,
   [{excluded_modules, [procket]}]}].
 ```
+Here is what we have: 
+
+![Alt text](/OpticalTopo.jpg?raw=true  "Pure Optical Topology")
+
 #### Reminder ####
 
 To assign a port to a logical switch two requirements has to be met:
