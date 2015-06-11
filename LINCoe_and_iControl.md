@@ -186,7 +186,7 @@ So now we have created the path from tap0 to tap1. Lets put some packet in tap0 
     (icontrol@127.0.0.1)12> iof:flows(SwitchKey).
     ```  
     For example, I get the following message when I run `(icontrol@127.0.0.1)>  iof:flows(1). `
-    ```
+    ```erlang
     {ofp_flow_stats_reply,[],
     [{ofp_flow_stats,0,4,424046000,100,0,0,[],
          <<0,0,0,0,0,0,0,10>>,
@@ -206,7 +206,7 @@ So now we have created the path from tap0 to tap1. Lets put some packet in tap0 
                {ofp_action_output,16,2,no_buffer}]}]}]}
     ```
     I get the following message when I run `(icontrol@127.0.0.1)>  iof:flows(2). `
-    ```
+    ```erlang
     {ofp_flow_stats_reply,[],
     [{ofp_flow_stats,0,6,688447000,100,0,0,[],
          <<0,0,0,0,0,0,0,10>>,
@@ -222,7 +222,7 @@ So now we have created the path from tap0 to tap1. Lets put some packet in tap0 
                {ofp_action_output,16,2,no_buffer}]}]}]}
     ```
     I get the following message when I run `(icontrol@127.0.0.1)>  iof:flows(3). `
-    ```
+    ```erlang
 {ofp_flow_stats_reply,[],
     [{ofp_flow_stats,0,115,967092000,100,0,0,[],
          <<0,0,0,0,0,0,0,10>>,
