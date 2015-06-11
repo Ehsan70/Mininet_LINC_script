@@ -1,10 +1,19 @@
-Start LINC-OE simple optical topology with iControl. 
-Thhis document has two portions: 
+<b>Important:</b> <i> This tutorial does not use any of the files in this repo. So you do not have to clone this repo if you are JUST following THIS tutorial. </i>
+
+
+<b>Goal</b>: Seting up LINC-OE simple optical topology with iControl. 
+
+<b>Requirements:</b>
+A basic knowlege of LINC-OE, TAP interfaces, Erlang language and linux CLI is required. 
+
+<b>Road Map: </b>This document has two sections for setup: 
 
  1. setting up the iControl 
  2. setting up the linc-oe
 
+After seting up the above two sections, we can install flows and send packets. 
 
+At the end I have provided some usefull functions and references. 
 
 
 # 1. setting up/running the iControl #
