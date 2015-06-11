@@ -139,13 +139,14 @@ So now you have both the linc-oe and iControll set up. Time to play with them.
 On one end you have a switch connected to Tap 0 and on the other end you have switch conneted to tap. Switches connect the two tap interfaces. But, If you put packets on one tap and monitoor the other tap, you will not recieve any packets. Why? Because iController needs to insert/instal flows on switches so that a path is created from tap 0 to tap 1. 
 Let's create that path: 
 
+Before we start I should mention that in optical networks packet ports are marked as T while optical ones as W. Thus we have a function called oe_flow_tw where tw means "from port T to port W".
+
 ```
 (icontrol@127.0.0.1)> iof:oe_flow_tw(2,100,1,2,20).
 ```
 Install a flow on switch 1 that will forward packets from port 1 to the optical link connected to port 2 using wavelength 20. Remeber that port 1 of switch with key 2 is connected to tap0. 
 Note that switch with key=2 has a switch id=1. Switch id is the one that you set in the `sys.config` file. -> I don't know why they are different.  
 Here switch with key 2 and switch id of 1 has one connection to a tap interface and one connection to optical link.
-
 
 
 ```
@@ -155,11 +156,45 @@ For switch with key 1, this will Install a flow on switch 2 that will take optic
 Here switch with key 1 and switch id of 2 is the middle switch. So there is no tap interface connected to it and has two optical connection. That's why we use `oe_flow_ww`. 
 
 
-
 ```
 (icontrol@127.0.0.1)> iof:oe_flow_wt(3,100,1,20,2).
 ```
 For switch with key 2, this will Install a flow on switch 3 that will take optical data from channel 20 on port 1 and convert it back to packet data and send it through port 2 
+
+
+## Observing the traffic ##
+So now we have created the path from tap0 to tap1. Lets put some packet in tap0 and see if we can receive it on tap1. 
+
+ 1. Examine the path. See if all the flows are installed properly using :
+ ```
+ iof:flows(<Switch key>).
+ ```
+ 2. Start Wireshark/tcpdump on port tap1
+ 
+ 3. Examine the counters of the flow installed on switches
+    ```erlang
+    (icontrol@127.0.0.1)12> iof:flows(SwitchKey).
+    ```  
+ In the response from controller the two numbers between a flow cookie and `ofp_match` indicate packet count and byte count appropriately:
+    ```erlang
+    {ofp_flow_stats_reply,[],
+        [{ofp_flow_stats,0,57,498711000,100,0,0,[],
+             <<0,0,0,0,0,0,0,10>>,
+             0,0,  % <--------- packet and byte counters of the flow entry
+             {ofp_match,
+                 [{ofp_field,openflow_basic,in_port,false,<<0,0,0,1>>,undefined},
+                  {ofp_field,infoblox,och_sigtype,false,<<"\n">>,undefined},
+                  {ofp_field,infoblox,och_sigid,false, <<0,0,0,23,0,0>>, undefined}]},
+             [{ofp_instruction_apply_actions,2,
+                  [{ofp_action_output,16,2,no_buffer}]}]}]}
+
+    ```
+ 4. Send ping through tap0  
+
+    `$ sudo tcpreplay -i tap0 LINC-Switch/pcap.data/ping.pcap`
+
+ 5. In the Wireshark verify that the packet got to the other end and check the flows stats once again.
+
 
 
 ## Useful Funtions: ##
@@ -174,6 +209,7 @@ Dumps flows in switch with key equal to <Switch key>.
 ```
 iof:flows(<Switch key>).  
 ```
+
 
 # Additional Sources #
 This tutorial was made from a comnination of the following tutorials: 
