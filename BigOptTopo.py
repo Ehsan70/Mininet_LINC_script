@@ -21,7 +21,7 @@ class BigOptTopo(Topo):
         # Adding packet switches to the network 
         self.pkt = [] 
         for p in range(0,6):
-          self.pkt.append(self.addSwitch('pkt-00'+str(p), dpid='000000000000000'+str(p), annotations={"latitude": 41.6, "longitude": -122.3+(5*p)}))
+          self.pkt.append(self.addSwitch('pkt-00'+str(p), dpid='0000AAAAAAAAAA0'+str(p), annotations={"latitude": 41.6, "longitude": -122.3+(5*p)}))
         print ("Size of pkt array is "+str(len(self.pkt)))
 
         # Connecting two optical switches
@@ -32,12 +32,16 @@ class BigOptTopo(Topo):
           print("Problem occured in making optical links")
         
         # Connecting pkt switches to optical ones
-        self.makePktOptLink(0,0)
-        self.makePktOptLink(1,0)
-        self.makePktOptLink(2,1)
-        self.makePktOptLink(3,2)
-        self.makePktOptLink(4,2)
-        self.makePktOptLink(5,2)
+        try:
+          self.makePktOptLink(0,0)
+          self.makePktOptLink(1,0)
+          self.makePktOptLink(2,1)
+          self.makePktOptLink(3,2)
+          self.makePktOptLink(4,2)
+          self.makePktOptLink(5,2)
+        except Exception, e:
+          print("Problem occured in making optical links")
+
 
         # Adding hosts
         h1 = self.addHost('h1')
