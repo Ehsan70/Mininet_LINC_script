@@ -254,6 +254,8 @@ So now we have created the path from tap0 to tap1. Lets put some packet in tap0 
  4. Send ping through tap0  
 
     `$ sudo tcpreplay -i tap0 LINC-Switch/pcap.data/ping.pcap`
+    > If tcpreply is not installed, follow these instructions:
+    > https://github.com/Ehsan70/Mininet_LINC_script/blob/master/Install_tcpreply.md
 
  5. In the Wireshark verify that the packet got to the other end and check the flows stats once again.
 
