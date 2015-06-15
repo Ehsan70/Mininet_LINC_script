@@ -21,7 +21,7 @@ Doing https://github.com/Ehsan70/Mininet_LINC_script/blob/master/LINCoe_and_iCon
  > cd loom/iControl
  > rel/icontrol/bin/icontrol console
  ```
- The iControl starts and listens on 0.0.0.0:6653
+ The iControl starts and listens on 0.0.0.0:6653 </br>
  b. Clearting the tap interfaces: 
  ```shell
  > sudo tunctl -t tap0
@@ -125,17 +125,17 @@ Doing https://github.com/Ehsan70/Mininet_LINC_script/blob/master/LINCoe_and_iCon
 
 # 2. setting up the packet network #
  a. Run POX 
- ```shell
- > ./pox.py log.level --debug forwarding.tutorial_l2_hub
- ```
- The pox will start up and listens on 0.0.0.0:6633
+  ```shell
+  > ./pox.py log.level --debug forwarding.tutorial_l2_hub
+  ```
+  The pox will start up and listens on 0.0.0.0:6633  </br>
  b. Run python topo using python API
- ```shell
- > sudo -E python SimpleOptTopoScratch.py
- ```
- The `SimpleOptTopoScratch.py` file will create a packet topolgy which includes two switches and two host. 
- The switches are connected to hosts on one end and on the other end they are connected to tap interfaces. 
- Note that tap interfaces are connected linc-oe switches.  
+  ```shell
+  > sudo -E python SimpleOptTopoScratch.py
+  ```
+  The `SimpleOptTopoScratch.py` file will create a packet topolgy which includes two switches and two host. 
+  The switches are connected to hosts on one end and on the other end they are connected to tap interfaces. 
+  Note that tap interfaces are connected linc-oe switches.  
  
  
 # Test #
