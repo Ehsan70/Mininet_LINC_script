@@ -4,25 +4,29 @@
 A basic knowlege of LINC-OE, TAP interfaces, POX, Erlang language and linux CLI is required. 
 Doing https://github.com/Ehsan70/Mininet_LINC_script/blob/master/LINCoe_and_iControl.md tutorial is a must. 
 
-<b>Environment: <b> I have used the VM from sdn hub, I recommond you do the same. Link for installation is provided below: http://sdnhub.org/tutorials/sdn-tutorial-vm/
+<b>Environment: </b> I have used the VM from sdn hub, I recommond you do the same. Link for installation is provided below: http://sdnhub.org/tutorials/sdn-tutorial-vm/
 
 <b>Road Map: </b>This document has two sections for setup: 
 
  1. setting up the optical network   
  2. setting up the packet network
  
+<b>Notations: </b>
+ `>` means the linuc command line
+ `iControl>` Means the iControll command line
+ ``
 # 1. setting up the optical network #
  a. Run iControl: 
  ```shell
- cd loom/iControl
- rel/icontrol/bin/icontrol console
+ > cd loom/iControl
+ > rel/icontrol/bin/icontrol console
  ```
  b. Clearting the tap interfaces: 
  ```shell
- sudo tunctl -t tap0
- sudo tunctl -t tap1
- sudo ip link set dev tap0 up
- sudo ip link set dev tap1 up
+ > sudo tunctl -t tap0
+ > sudo tunctl -t tap1
+ > sudo ip link set dev tap0 up
+ > sudo ip link set dev tap1 up
  ```
  c. Set up the `sys.config` file: 
  `rel/files/sys.config` file for the network shown above should looks as following:
@@ -97,18 +101,18 @@ Doing https://github.com/Ehsan70/Mininet_LINC_script/blob/master/LINCoe_and_iCon
  ```
  d. start LINC-OE: 
  ```shell
- make rel && sudo rel/linc/bin/linc console
+ > make rel && sudo rel/linc/bin/linc console
  ```
  e. Add some flows to the optical switches. 
  Type the following commands in the iControl window:
  ```erlang
- iof:oe_flow_tw(2,100,1,2,20).
- iof:oe_flow_ww(1,100,1,20,2,20).
- iof:oe_flow_wt(3,100,1,20,2).
+ iControl> iof:oe_flow_tw(2,100,1,2,20).
+ iControl> iof:oe_flow_ww(1,100,1,20,2,20).
+ iControl> iof:oe_flow_wt(3,100,1,20,2).
  
- iof:oe_flow_wt(2,100,2,20,1).
- iof:oe_flow_ww(1,100,2,20,1,20).
- iof:oe_flow_tw(3,100,2,1,20).
+ iControl> iof:oe_flow_wt(2,100,2,20,1).
+ iControl> iof:oe_flow_ww(1,100,2,20,1,20).
+ iControl> iof:oe_flow_tw(3,100,2,1,20).
  ```
  > Note that you need to add flows for both directions. 
  
