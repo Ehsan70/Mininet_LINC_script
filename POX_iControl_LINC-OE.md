@@ -12,15 +12,16 @@ Doing https://github.com/Ehsan70/Mininet_LINC_script/blob/master/LINCoe_and_iCon
  2. setting up the packet network
  
 <b>Notations: </b>
- `>` means the linuc command line
- `iControl>` Means the iControll command line
- ``
+ - `>` means the linuc command line <br>
+ - `iControl>` Means the iControll command line
+ 
 # 1. setting up the optical network #
  a. Run iControl: 
  ```shell
  > cd loom/iControl
  > rel/icontrol/bin/icontrol console
  ```
+ The iControl starts and listens on 0.0.0.0:6653
  b. Clearting the tap interfaces: 
  ```shell
  > sudo tunctl -t tap0
@@ -117,6 +118,38 @@ Doing https://github.com/Ehsan70/Mininet_LINC_script/blob/master/LINCoe_and_iCon
  > Note that you need to add flows for both directions. 
  
  So now if put stuff (packets) in one of the tap interfaces (using tcpreply) it will apear on the tap. 
+ 
+ > Follow the LINCoe_and_iControl.md tutorial to check if you have done all the steps right. 
+ 
+
+
+# 2. setting up the packet network #
+ a. Run POX 
+ ```shell
+ > ./pox.py log.level --debug forwarding.tutorial_l2_hub
+ ```
+ The pox will start up and listens on 0.0.0.0:6633
+ b. Run python topo using python API
+ ```shell
+ > sudo -E python SimpleOptTopoScratch.py
+ ```
+ The `SimpleOptTopoScratch.py` file will create a packet topolgy which includes two switches and two host. 
+ The switches are connected to hosts on one end and on the other end they are connected to tap interfaces. 
+ Note that tap interfaces are connected linc-oe switches.  
+ 
+ 
+# Test #
+Now you have the optical and packet network ready and connected. 
+If you run `pingall` on mininet CLI, none of the packets should be droped. 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
  
  
  
