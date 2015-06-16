@@ -1,5 +1,4 @@
 <b>Goal</b>: Seting up LINC-OE simple optical topology controlled by iControl and a packet simple topology controlled by POX. 
-
 <b>Requirements:</b>
 A basic knowlege of LINC-OE, TAP interfaces, POX, Erlang language and linux CLI is required. 
 Doing https://github.com/Ehsan70/Mininet_LINC_script/blob/master/LINCoe_and_iControl.md tutorial is a must. 
@@ -9,8 +8,11 @@ Doing https://github.com/Ehsan70/Mininet_LINC_script/blob/master/LINCoe_and_iCon
 <b>Road Map: </b>This document has two sections for setup: 
 
  1. setting up the optical network   
- 2. setting up the packet network
- 
+ 2. setting up the packet network </br>
+
+Then the tutorial would run couple of experminets. After the experminet the tutorial talkes about the details of the network and what is goingt on under the hood.   
+
+
 <b>Notations: </b>
  - `>` means the linuc command line <br>
  - `iControl>` Means the iControll command line
@@ -128,8 +130,9 @@ Doing https://github.com/Ehsan70/Mininet_LINC_script/blob/master/LINCoe_and_iCon
   ```shell
   > ./pox.py log.level --debug forwarding.tutorial_l2_hub
   ```
-  The pox will start up and listens on 0.0.0.0:6633  </br>
- b. Run python topo using python API
+  This will instanciate a hub controller. So here is what is happening nder the hood: a packet comes on one port of the packet switch, the switch doesn't know what to do so it asks the pox controller. The pox will tell the switch to broadcast the packet (meaning send it to all ports; acts like a hub). This would send the packet on to the port which is connected to the tap interface. 
+  The pox will start up and listens on 0.0.0.0:6633  </br></br>
+ b. Move to the directory where this repository is cloned into, and tun python topo using python API. 
   ```shell
   > sudo -E python SimpleOptTopoScratch.py
   ```
@@ -137,15 +140,50 @@ Doing https://github.com/Ehsan70/Mininet_LINC_script/blob/master/LINCoe_and_iCon
   The switches are connected to hosts on one end and on the other end they are connected to tap interfaces. 
   Note that tap interfaces are connected linc-oe switches.  
  
- 
-# Test #
-Now you have the optical and packet network ready and connected. 
+# Experiment senario #
+## Experminet One ##
+Now the optical and packet network are ready and connected. 
 If you run `pingall` on mininet CLI, none of the packets should be droped. 
+
+Of course you can have wireshark probing Tap0 or Tap1 interfaces.</br>
+Let's remove all of the optical flows. To do so, execute the following:
+```erlang
+iControl> iof:clear_flows(1,0). 
+iControl> iof:clear_flows(2,0).
+iControl> iof:clear_flows(3,0).
+%% The below commands will dump the flows installed on specific switch keys. You could execute them to check the flows. 
+iControl> iof:flows(1).
+iControl> iof:flows(2).
+iControl> iof:flows(3).
+```
+Now, if you try `pingall` 100 percent of the packets will drop. </br>
+
+## Experiment Two ##
+
+Now lets recreate one direction of the path in the optical network. Note that the ping packets are sent by one of the host but cannot be received. This means, we should expect all packets to be droped. Let's go ahead and do what we talked about: 
+
+Enter the flowwing in the iControll window: 
+```erlang
+iControl> iof:clear_flows(1,0). 
+iControl> iof:clear_flows(2,0).
+iControl> iof:clear_flows(3,0).
+```
+Run `pingall` in mininet CLI window. You will see that all the packets are dropped. 
+
+## Experiment Three ##
+<b>Assumption:</b> I assumed you did the last experminet. 
+Now, let's create other direction of the path. Enter the following in iControl window: 
+```erlang
+iControl> iof:oe_flow_wt(2,100,2,20,1).
+iControl> iof:oe_flow_ww(1,100,2,20,1,20).
+iControl> iof:oe_flow_tw(3,100,2,1,20).
+```
+Run `pingall` in mininet CLI window. You will see that none of the packets are droped. 
  
+# Details of The Network # 
+One of the hosts (host A) sends a packet to the other one (host B). A packet reaches the port of the packet switch, the switch doesn't know what to do so it asks the pox controller. The pox controller is instantiated as a hub, so it will tell the switch to broadcast the packet (meaning send it to all ports; acts like a hub). This would send the packet on to the port which is connected to the tap interface. When the packet reaches the TAP interface it has leaved the packet network and has entered the optical network. So now if the optical switches are set up properlly (i.e. the flows are right) then the packets reaches the other tap interfcae. Otherwise, if optical switches don't have the proper flows then the packet is droped/lost. Below is and image of network topologies.      
  
- 
- 
- 
+![Alt text](/MultiTopo.jpg?raw=true  "Multi Layer Network")
  
  
  
