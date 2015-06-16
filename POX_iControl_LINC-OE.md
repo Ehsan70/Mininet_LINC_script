@@ -12,11 +12,12 @@ Doing https://github.com/Ehsan70/Mininet_LINC_script/blob/master/LINCoe_and_iCon
 
 Then the tutorial would run couple of experminets. After the experminet the tutorial talkes about the details of the network and what is goingt on under the hood.   
 
-
 <b>Notations: </b>
  - `>` means the linuc command line <br>
  - `iControl>` Means the iControll command line
  
+> Before we start have a look at the image at the end of this file to get a sense of what the topology will be. 
+
 # 1. setting up the optical network #
  a. Run iControl: 
  ```shell
