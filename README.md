@@ -1,10 +1,10 @@
 # Mininet_LINC_script
-Contains script that creates optical and packet topologies using Mininet and LINC.
+Contains script that creates optical and packet topologies using Mininet, iControll and LINC.
 
 # Files #
 #### BigOptTopo.py ####
+TODO
 
-dfgdfg
 #### Install_tcpreply.md ####
 This file contains instructions on installing tCP reply on Ubuntu OS. TCPreply is used in POX_iControl_LINC-OE.md and LINCoe_and_iControl.md tutorials.
 
@@ -21,21 +21,21 @@ Below is the optical and packet network topology.
 #### SimpleOptTopo.py 
 This python code creates optical and packet network connected through Tap interface. This code uses `opticalUtils.py` to create and manage optical elements and network. It can only be connected to onos controller. 
 See [this tutorial](https://wiki.onosproject.org/display/ONOS/Packet+Optical+Tutorial) on ONOS webpage for the full tutorial.
+
 #### SimpleOptTopoScratch.py 
 This file is used for `POX_iControl_LINC-OE.md` tutorial. It constructs the packet layer of the network and connects it to the tap interfaces. 
 - It uses only Mininet Python API. 
 - Contains a good example of creating TAP interfaces in Mininet Python API. 
 
 #### opticalUtils.py
-This file is created by onos project for creating optical networks along with packet ones. Here is the link to the file: https://github.com/opennetworkinglab/onos/tree/master/tools/test/topos 
-> `SimpleOptTopo.py` uses this library to create optical networks. 
-> This library creates functions that uses linc-oe and sets up the optical netwpork. 
+This file is created by onos project for creating optical networks along with packet ones. Here is the [link](https://github.com/opennetworkinglab/onos/tree/master/tools/test/topos ) to the file. `SimpleOptTopo.py` uses this library to create optical networks. This library creates functions that uses linc-oe and sets up the optical netwpork. 
 
 #### sys-PureOptTop.config 
 This is a `sys.cofig` that should be used durring the `LINCoe_and_iControl.md` and `POX_iControl_LINC-OE.md`. However, you don't need to use this the tutorials already have the content embedded in the file. 
 
 #### sys-original.config  
 This is the sample `sys.config` file which contains comments on how to use the configuration. This file comes with LINC. The original file in LINC_switch can be found [here](https://github.com/FlowForwarding/LINC-Switch/blob/master/rel/files/sys.config.orig). 
+
 #### sys.config 
  TODO
 #Setup#
