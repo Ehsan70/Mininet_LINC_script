@@ -15,7 +15,7 @@ Here is the topology created by this tutorial:
 
 #### POX_iControl_LINC-OE.md
 This tutorial sets up LINC-OE based simple optical topology controlled by iControl and a simple packet topology controlled by POX controller. This tutorial uses the python file `SimpleOptTopoScratch.py`.
-Below is the optical and packet network topology. 
+Below is the optical and packet network topology: </br>
 ![Alt text](/MultiTopo.jpg?raw=true  "Multi Layer Network")
 
 #### SimpleOptTopo.py 
