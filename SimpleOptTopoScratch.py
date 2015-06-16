@@ -31,8 +31,8 @@ class OpticalTopoScratch(Topo):
         h1 = self.addHost('h1')
         h2 = self.addHost('h2')
 
-        s1 = self.addSwitch('s1', dpid="0000ffffffff0001")
-        s2 = self.addSwitch('s2', dpid="0000ffffffff0002")
+        s1 = self.addSwitch('s1', dpid="0000ffff00000001")
+        s2 = self.addSwitch('s2', dpid="0000ffff00000002")
 
         # Add links from hosts to OVS
         self.addLink(s1, h1)
@@ -41,15 +41,15 @@ class OpticalTopoScratch(Topo):
 
         # add links from ovs to linc-oe
         # sorry about the syntax :(
-        self.addIntf(s1,'tap30')
-        self.addIntf(s2,'tap31')
+        self.addIntf(s1,'tap0')
+        self.addIntf(s2,'tap1')
 
 
         # if you use, sudo mn --custom custom/optical.py, then register the topo:
 topos = {'optical': ( lambda: OpticalTopoScratch() )}
 
 def run():
-    c = RemoteController('c','127.0.0.1',6633)
+    c = RemoteController('c','0.0.0.0',6633)
     net = Mininet( topo=OpticalTopoScratch(),controller=None,autoSetMacs=True)
     net.addController(c)
     net.start()
@@ -62,5 +62,4 @@ def run():
 if __name__ == '__main__':
     setLogLevel('info')
     run()
-
 
