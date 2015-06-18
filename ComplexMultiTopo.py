@@ -17,54 +17,62 @@ class NullLink( Link ):
     def delete( self ):
         pass
 
-class ComplexMultiTopo(Topo):
+class OpticalTopoScratch(Topo):
     def addIntf( self, switch, intfName ):
         "Add intf intfName to switch"
         self.addLink( switch, switch, cls=NullLink,
                       intfName1=intfName, cls2=NullIntf )
-    def build(self):
-        
-        self.NUM_OF_HOSTS = 14 # number of hosts
+    def __init__(self):
+
+        self.NUM_OF_HOSTS = 7 # number of hosts
         self.NUM_OF_PKT_SW = 7 # number of packet swiches 
         self.NUM_OF_OPT_SW = 4 # number of optical swiches 
-        # NOte that optical switches are mcreated in sys.config
 
         # Initialize topology
-		#        Topo.__init__(self)
+        Topo.__init__(self)
+        h1 = self.addHost('h1')
+        h2 = self.addHost('h2')
+        h3 = self.addHost('h3')
+        h4 = self.addHost('h4')
+        h5 = self.addHost('h5')
+        h6 = self.addHost('h6')
+        h7 = self.addHost('h7')
 
-        self.hosts = []
-        self.pkt_swt = [] 
 
-        # Add hosts 
-        for h in range(1,self.NUM_OF_HOSTS+1):
-        	self.hosts.append(self.addHost('h'+str(h)))
-        print ("Size of hosts array is "+str(len(self.hosts)))
-        
-        # Add switches
-        for p in range(1,self.NUM_OF_PKT_SW+1) :
-        	self.pkt_swt.append(self.addSwitch('p'+str(p), dpid="0000ffff000000%02d"%p))
-        print ("Size of pkt array is "+str(len(self.pkt_swt)))
-        
+        o1 = self.addSwitch('o1', dpid="0000ffff00000001")
+        o2 = self.addSwitch('o2', dpid="0000ffff00000002")
+        o3 = self.addSwitch('o3', dpid="0000ffff00000003")
+        o4 = self.addSwitch('o4', dpid="0000ffff00000004")
+        o5 = self.addSwitch('o5', dpid="0000ffff00000005")
+        o6 = self.addSwitch('o6', dpid="0000ffff00000006")
+        o7 = self.addSwitch('o7', dpid="0000ffff00000007")
+
         # Add links from hosts to OVS
-        for i, p_sw in enumerate(self.pkt_swt,start=1):
-        	print ("index is "+str(i))
-        	if (2*i > len(self.hosts)):
-        		print ("Ehsan")
-        	self.addLink(p_sw, self.hosts.pop())
-        	self.addLink(p_sw, self.hosts.pop())
+        self.addLink(o1, h1)
+        self.addLink(o2, h2)
+        self.addLink(o3, h3)
+        self.addLink(o4, h4)
+        self.addLink(o5, h5)
+        self.addLink(o6, h6)
+        self.addLink(o7, h7)
 
-        # add links from ovs to linc-oe			
-        for i, p_sw in enumerate(self.pkt_swt,start=1) :
-        	self.addIntf(p_sw,'tap'+str(i))
-
+        # add links from ovs to linc-oe
+        # sorry about the syntax :(
+        self.addIntf(o1,'tap1')
+        self.addIntf(o2,'tap2')
+        self.addIntf(o3,'tap3')
+        self.addIntf(o4,'tap4')
+        self.addIntf(o5,'tap5')
+        self.addIntf(o6,'tap6')
+        self.addIntf(o7,'tap7')
 
 
         # if you use, sudo mn --custom custom/optical.py, then register the topo:
-topos = {'optical': ( lambda: ComplexMultiTopo() )}
+topos = {'optical': ( lambda: OpticalTopoScratch() )}
 
 def run():
     c = RemoteController('c','0.0.0.0',6633)
-    net = Mininet( topo=ComplexMultiTopo(),controller=None,autoSetMacs=True)
+    net = Mininet( topo=OpticalTopoScratch(),controller=None,autoSetMacs=True)
     net.addController(c)
     net.start()
 
@@ -76,4 +84,3 @@ def run():
 if __name__ == '__main__':
     setLogLevel('info')
     run()
-
