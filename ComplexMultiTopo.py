@@ -57,14 +57,13 @@ class OpticalTopoScratch(Topo):
         self.addLink(o7, h7)
 
         # add links from ovs to linc-oe
-        # sorry about the syntax :(
-        self.addIntf(o1,'tap1')
-        self.addIntf(o2,'tap2')
-        self.addIntf(o3,'tap3')
-        self.addIntf(o4,'tap4')
-        self.addIntf(o5,'tap5')
-        self.addIntf(o6,'tap6')
-        self.addIntf(o7,'tap7')
+    	self.addIntf(o1,'tap1')
+    	self.addIntf(o2,'tap2')
+    	self.addIntf(o3,'tap3')
+    	self.addIntf(o4,'tap4')
+    	self.addIntf(o5,'tap5')
+    	self.addIntf(o6,'tap6')
+    	self.addIntf(o7,'tap7')
 
 
         # if you use, sudo mn --custom custom/optical.py, then register the topo:
