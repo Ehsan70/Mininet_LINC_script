@@ -184,7 +184,7 @@ Run `pingall` in mininet CLI window. You will see that none of the packets are d
 # Details of The Network # 
 One of the hosts (host A) sends a packet to the other one (host B). A packet reaches the port of the packet switch, the switch doesn't know what to do so it asks the pox controller. The pox controller is instantiated as a hub, so it will tell the switch to broadcast the packet (meaning send it to all ports; acts like a hub). This would send the packet on to the port which is connected to the tap interface. When the packet reaches the TAP interface it has leaved the packet network and has entered the optical network. So now if the optical switches are set up properlly (i.e. the flows are right) then the packets reaches the other tap interfcae. Otherwise, if optical switches don't have the proper flows then the packet is droped/lost. Below is and image of network topologies.      
  
-![Alt text](/MultiTopo.jpg?raw=true  "Multi Layer Network")
+![Alt text](resources/MultiTopo.jpg?raw=true  "Multi Layer Network")
  
  
  
