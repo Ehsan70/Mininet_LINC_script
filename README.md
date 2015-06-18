@@ -11,12 +11,12 @@ This file contains instructions on installing tCP reply on Ubuntu OS. TCPreply i
 #### LINCoe_and_iControl.md
 This tutorial contains steps to create a pure optical network with linc-oe switches and controlled by iControll. TCPreply is used to send packets into the tap interfaces. </br>
 Here is the topology created by this tutorial: 
-![Alt text](/OpticalTopo.jpg?raw=true  "Pure Optical Topology")
+![Alt text](resources/OpticalTopo.jpg?raw=true  "Pure Optical Topology")
 
 #### POX_iControl_LINC-OE.md
 This tutorial sets up LINC-OE based simple optical topology controlled by iControl and a simple packet topology controlled by POX controller. This tutorial uses the python file `SimpleOptTopoScratch.py`.
 Below is the optical and packet network topology: </br>
-![Alt text](/MultiTopo.jpg?raw=true  "Multi Layer Network")
+![Alt text](resources/MultiTopo.jpg?raw=true  "Multi Layer Network")
 
 #### SimpleOptTopo.py 
 This python code creates optical and packet network connected through Tap interface. This code uses `opticalUtils.py` to create and manage optical elements and network. It can only be connected to onos controller. 
