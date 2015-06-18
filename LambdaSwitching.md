@@ -135,5 +135,7 @@ Doing [this tutorial](https://github.com/Ehsan70/Mininet_LINC_script/blob/master
   The switches are connected to hosts on one end and on the other end they are connected to tap interfaces. 
   Note that tap interfaces are connected linc-oe switches.  
  
+ Here is the topolgu of what we have right now:
+ ![Alt text](resources/ComplexMultiTopo.jpg?raw=true  "Multi Layer Network")
 #  2. performing Lambda switching
 
