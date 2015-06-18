@@ -17,7 +17,7 @@ class NullLink( Link ):
     def delete( self ):
         pass
 
-class OpticalTopoScratch(Topo):
+class ComplexMultiTopo(Topo):
     def addIntf( self, switch, intfName ):
         "Add intf intfName to switch"
         self.addLink( switch, switch, cls=NullLink,
@@ -35,32 +35,15 @@ class OpticalTopoScratch(Topo):
         self.hosts = []
         self.pkt_swt = [] 
 
-        # Add hosts 
-        for h in range(1,self.NUM_OF_HOSTS)
-            self.hosts.append(self.addHost('h'+str(h)))
-
-        # Add switches
-        for p in range(1,self) 
-            self.pkt_swt.append(self.addSwitch('p'+str(p), dpid="0000ffff000000%02d"%str(p)))
         
-
-        # Add links from hosts to OVS
-        for i, p_sw in enumerate(pkt_swt,start=1)
-            self.addLink(p_sw, h[2*i-1])
-            self.addLink(p_sw, h[2*i])
-
-        # add links from ovs to linc-oe
-        for i, p_sw in enumerate(pkt_swt,start=1)
-            self.addIntf(p_sw,'tap'+str(i))
-
 
 
         # if you use, sudo mn --custom custom/optical.py, then register the topo:
-topos = {'optical': ( lambda: OpticalTopoScratch() )}
+topos = {'optical': ( lambda: ComplexMultiTopo() )}
 
 def run():
     c = RemoteController('c','0.0.0.0',6633)
-    net = Mininet( topo=OpticalTopoScratch(),controller=None,autoSetMacs=True)
+    net = Mininet( topo=ComplexMultiTopo(),controller=None,autoSetMacs=True)
     net.addController(c)
     net.start()
 
