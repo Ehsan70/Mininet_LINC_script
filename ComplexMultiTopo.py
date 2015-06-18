@@ -30,7 +30,7 @@ class ComplexMultiTopo(Topo):
         # NOte that optical switches are mcreated in sys.config
 
         # Initialize topology
-#        Topo.__init__(self)
+		#        Topo.__init__(self)
 
         self.hosts = []
         self.pkt_swt = [] 
@@ -49,7 +49,7 @@ class ComplexMultiTopo(Topo):
         for i, p_sw in enumerate(self.pkt_swt,start=1):
         	print ("index is "+str(i))
         	if (2*i > len(self.hosts)):
-        		print "Ehsan"
+        		print ("Ehsan")
         	self.addLink(p_sw, self.hosts.pop())
         	self.addLink(p_sw, self.hosts.pop())
 
