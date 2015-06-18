@@ -27,6 +27,13 @@ This file is used for `POX_iControl_LINC-OE.md` tutorial. It constructs the pack
 - It uses only Mininet Python API. 
 - Contains a good example of creating TAP interfaces in Mininet Python API. 
 
+#### TapSetup.bash
+This file creates X number of Tap interfaces. Where the script gets a number of tap interfaces (X) from the command line (i.e. args).The script takes two arguments: The first one is the number (int) of tap ionterfaces to be created. The second one (string) can take two values: 'up' or 'down'.
+- up : for bringing the tap interface up"
+- down : for bringing the tap interface down"
+
+It can be used for big topologies. 
+
 #### opticalUtils.py
 This file is created by onos project for creating optical networks along with packet ones. Here is the [link](https://github.com/opennetworkinglab/onos/tree/master/tools/test/topos ) to the file. `SimpleOptTopo.py` uses this library to create optical networks. This library creates functions that uses linc-oe and sets up the optical netwpork. 
 
