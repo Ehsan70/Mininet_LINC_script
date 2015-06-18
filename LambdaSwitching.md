@@ -10,6 +10,7 @@ Doing [this tutorial](https://github.com/Ehsan70/Mininet_LINC_script/blob/master
  1. setting up the optical and packet network </br>
  2. performing Lambda switching
 
+
 # 1. setting up the optical and packet network 
 
 ### setting up the optical network ###
@@ -148,4 +149,37 @@ Doing [this tutorial](https://github.com/Ehsan70/Mininet_LINC_script/blob/master
  Here is the topolgu of what we have right now:
  ![Alt text](resources/ComplexMultiTopo.jpg?raw=true  "Multi Layer Network")
 #  2. performing Lambda switching
+## Experminet One ##
+Now the optical and packet network are ready and connected. 
+If you run `pingall` on mininet CLI, all of the packets should be droped. 
 
+Of course you can have wireshark probing any of the interfaces.</br>
+Before we add flows we need to check what the switch key is for each optical switch. That can be done using 
+```erlang
+iControl> iof:switches(). 
+```
+The bove with return something like: 
+```
+iControl> iof:switches().                 
+Switch-Key DatapathId                       IpAddr            Version
+---------- -------------------------------- ----------------- -------
+*1         00:00:00:00:00:01:00:02          {127,0,0,1}       4      
+ 2         00:00:00:00:00:01:00:03          {127,0,0,1}       4      
+ 3         00:00:00:00:00:01:00:01          {127,0,0,1}       4      
+ok
+```
+The first line means: the switch with Datapath ID (DPID) of 00:00:00:00:00:01:00:02 has the switch key value of 1. The second and third can be observed similarly. </br>
+> Note that the follwoing code may need to be changed based on switch keys. 
+Now, let's add some flows such that h1 can ping h6. </br>
+```erlang
+ iControl> iof:oe_flow_tw(3,100,1,4,20).
+ iControl> iof:oe_flow_ww(1,100,1,20,3,20).
+ iControl> iof:oe_flow_wt(2,100,1,20,3).
+```
+The above would create one side of the path from h1 to h6.</br>
+```erlang
+ iControl> iof:oe_flow_wt(2,100,2,20,1). not done 
+ iControl> iof:oe_flow_ww(1,100,2,20,1,20).not done 
+ iControl> iof:oe_flow_tw(3,100,2,1,20).not done 
+ ```
+Now, if you try `pingall` 100 percent of the packets will drop. </br>
