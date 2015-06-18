@@ -32,8 +32,16 @@ This file creates X number of Tap interfaces. Where the script gets a number of 
 - up : for bringing the tap interface up"
 - down : for bringing the tap interface down"
 
-It can be used for big topologies. 
-
+It can be used for big topologies. Below is the example commands to execute the script:  
+ - Below creates 'tap1' and 'tap2' and it brings them up. </br>
+  ```
+  sudo bash TapSetup.bash 2 up
+  ``` </br>
+ - Below brings 'tap1' and 'tap2' down.</br>
+  ```
+  sudo bash TapSetup.bash 2 down
+  ```
+  
 #### opticalUtils.py
 This file is created by onos project for creating optical networks along with packet ones. Here is the [link](https://github.com/opennetworkinglab/onos/tree/master/tools/test/topos ) to the file. `SimpleOptTopo.py` uses this library to create optical networks. This library creates functions that uses linc-oe and sets up the optical netwpork. 
 
