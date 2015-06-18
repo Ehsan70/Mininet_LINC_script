@@ -35,7 +35,25 @@ class ComplexMultiTopo(Topo):
         self.hosts = []
         self.pkt_swt = [] 
 
+        # Add hosts 
+        for h in range(1,self.NUM_OF_HOSTS+1):
+        	pass	
+           #self.hosts.append(self.addHost('h'+str(h)))
+
+        # Add switches
+        for p in range(1,self.NUM_OF_PKT_SW+1) :
+        	pass
+            #self.pkt_swt.append(self.addSwitch('p'+str(p), dpid="0000ffff000000%02d"%p))
         
+        # Add links from hosts to OVS
+        for i, p_sw in enumerate(self.pkt_swt,start=1):
+        	self.addLink(p_sw, h[2*i-1])
+        	self.addLink(p_sw, h[2*i])
+
+        # add links from ovs to linc-oe			
+        for i, p_sw in enumerate(self.pkt_swt,start=1) :
+        	self.addIntf(p_sw,'tap'+str(i))
+
 
 
         # if you use, sudo mn --custom custom/optical.py, then register the topo:
