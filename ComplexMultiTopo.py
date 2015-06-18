@@ -22,33 +22,36 @@ class ComplexMultiTopo(Topo):
         "Add intf intfName to switch"
         self.addLink( switch, switch, cls=NullLink,
                       intfName1=intfName, cls2=NullIntf )
-    def __init__(self):
+    def build(self):
         
-        self.NUM_OF_HOSTS = 15 # number of hosts
+        self.NUM_OF_HOSTS = 14 # number of hosts
         self.NUM_OF_PKT_SW = 7 # number of packet swiches 
         self.NUM_OF_OPT_SW = 4 # number of optical swiches 
         # NOte that optical switches are mcreated in sys.config
 
         # Initialize topology
-        Topo.__init__(self)
+#        Topo.__init__(self)
 
         self.hosts = []
         self.pkt_swt = [] 
 
         # Add hosts 
         for h in range(1,self.NUM_OF_HOSTS+1):
-        	pass	
-           #self.hosts.append(self.addHost('h'+str(h)))
-
+        	self.hosts.append(self.addHost('h'+str(h)))
+        print ("Size of hosts array is "+str(len(self.hosts)))
+        
         # Add switches
         for p in range(1,self.NUM_OF_PKT_SW+1) :
-        	pass
-            #self.pkt_swt.append(self.addSwitch('p'+str(p), dpid="0000ffff000000%02d"%p))
+        	self.pkt_swt.append(self.addSwitch('p'+str(p), dpid="0000ffff000000%02d"%p))
+        print ("Size of pkt array is "+str(len(self.pkt_swt)))
         
         # Add links from hosts to OVS
         for i, p_sw in enumerate(self.pkt_swt,start=1):
-        	self.addLink(p_sw, h[2*i-1])
-        	self.addLink(p_sw, h[2*i])
+        	print ("index is "+str(i))
+        	if (2*i > len(self.hosts)):
+        		print "Ehsan"
+        	self.addLink(p_sw, self.hosts.pop())
+        	self.addLink(p_sw, self.hosts.pop())
 
         # add links from ovs to linc-oe			
         for i, p_sw in enumerate(self.pkt_swt,start=1) :
@@ -73,3 +76,4 @@ def run():
 if __name__ == '__main__':
     setLogLevel('info')
     run()
+
