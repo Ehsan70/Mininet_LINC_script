@@ -38,32 +38,31 @@ class OpticalTopoScratch(Topo):
         h6 = self.addHost('h6')
         h7 = self.addHost('h7')
 
-
-        o1 = self.addSwitch('o1', dpid="0000ffff00000001")
-        o2 = self.addSwitch('o2', dpid="0000ffff00000002")
-        o3 = self.addSwitch('o3', dpid="0000ffff00000003")
-        o4 = self.addSwitch('o4', dpid="0000ffff00000004")
-        o5 = self.addSwitch('o5', dpid="0000ffff00000005")
-        o6 = self.addSwitch('o6', dpid="0000ffff00000006")
-        o7 = self.addSwitch('o7', dpid="0000ffff00000007")
+        s1 = self.addSwitch('s1', dpid="0000ffff00000001")
+        s2 = self.addSwitch('s2', dpid="0000ffff00000002")
+        s3 = self.addSwitch('s3', dpid="0000ffff00000003")
+        s4 = self.addSwitch('s4', dpid="0000ffff00000004")
+        s5 = self.addSwitch('s5', dpid="0000ffff00000005")
+        s6 = self.addSwitch('s6', dpid="0000ffff00000006")
+        s7 = self.addSwitch('s7', dpid="0000ffff00000007")
 
         # Add links from hosts to OVS
-        self.addLink(o1, h1)
-        self.addLink(o2, h2)
-        self.addLink(o3, h3)
-        self.addLink(o4, h4)
-        self.addLink(o5, h5)
-        self.addLink(o6, h6)
-        self.addLink(o7, h7)
+        self.addLink(s1, h1)
+        self.addLink(s2, h2)
+        self.addLink(s3, h3)
+        self.addLink(s4, h4)
+        self.addLink(s5, h5)
+        self.addLink(s6, h6)
+        self.addLink(s7, h7)
 
         # add links from ovs to linc-oe
-    	self.addIntf(o1,'tap1')
-    	self.addIntf(o2,'tap2')
-    	self.addIntf(o3,'tap3')
-    	self.addIntf(o4,'tap4')
-    	self.addIntf(o5,'tap5')
-    	self.addIntf(o6,'tap6')
-    	self.addIntf(o7,'tap7')
+    	self.addIntf(s1,'tap1')
+    	self.addIntf(s2,'tap2')
+    	self.addIntf(s3,'tap3')
+    	self.addIntf(s4,'tap4')
+    	self.addIntf(s5,'tap5')
+    	self.addIntf(s6,'tap6')
+    	self.addIntf(s7,'tap7')
 
 
         # if you use, sudo mn --custom custom/optical.py, then register the topo:
