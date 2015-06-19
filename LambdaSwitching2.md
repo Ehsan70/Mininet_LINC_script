@@ -48,7 +48,7 @@ Doing [this tutorial](https://github.com/Ehsan70/Mininet_LINC_script/blob/master
      {port,13,[{interface,"tap5"}]}
     ]},
    {capable_switch_queues, []},
-   {optical_links, [{{1,4}, {2,1}}, {{2,3},{3,1}}]},
+   {optical_links, [{{1,4}, {2,1}}, {{2,4}, {4,1}}, {{2,3},{3,1}}]},
    {logical_switches,
     [{switch,1,
       [{backend,linc_us4_oe},
