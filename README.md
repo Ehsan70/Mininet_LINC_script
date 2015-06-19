@@ -27,7 +27,8 @@ This file contains instructions on installing tCP reply on Ubuntu OS. TCPreply i
 
 #### LINCoe_and_iControl.md
 This tutorial contains steps to create a pure optical network with linc-oe switches and controlled by iControll. TCPreply is used to send packets into the tap interfaces. </br>
-This code was ran on SDNhub virtuall machine which is provided [here](http://sdnhub.org/tutorials/sdn-tutorial-vm/).
+ - This code was ran on SDNhub virtuall machine which is provided [here](http://sdnhub.org/tutorials/sdn-tutorial-vm/).</br>
+
 Here is the topology created by this tutorial: 
 ![Alt text](resources/OpticalTopo.jpg?raw=true  "Pure Optical Topology")
 
@@ -35,18 +36,21 @@ Here is the topology created by this tutorial:
 The tutorial quickly sets up LINC-OE simple optical topology controlled by iControl and a simple packet topology controlled by POX. Then trying to perform Lambda Switching on one of the optical switches. 
 - The tutorial uses `TapSetup.bash` to create Tap interfaces (See description for `TapSetup.bash` file). 
 - The tutorial also uses `ComplexMultiTopo.py` to create the packet network. 
-- Do the tutorial on [SDN hub all-in-one VM](http://sdnhub.org/tutorials/sdn-tutorial-vm/).
+- Do the tutorial on [SDN hub all-in-one VM](http://sdnhub.org/tutorials/sdn-tutorial-vm/).</br>
+
 Here is the topo:
 ![Alt text](resources/ComplexMultiTopoWithSwitching.jpg?raw=true  "Multi Layer Network and Lambda Switching")
-Note that controllers are not shown in the above image. 
+> Note that controllers are not shown in the above image. 
+
 #### POX_iControl_LINC-OE.md
 This tutorial sets up LINC-OE based simple optical topology controlled by iControl and a simple packet topology controlled by POX controller. This tutorial uses the python file `SimpleOptTopoScratch.py`. This code was ran on SDNhub virtuall machine which is provided [here](http://sdnhub.org/tutorials/sdn-tutorial-vm/).
 Below is the optical and packet network topology: </br>
 ![Alt text](resources/MultiTopo.jpg?raw=true  "Multi Layer Network")
 
 #### SimpleOptTopo.py 
-This python code creates optical and packet network connected through Tap interface.  Note that it uses the [opticalUtils.py](https://github.com/Ehsan70/Mininet_LINC_script/blob/master/opticalUtils.py) library which is written by ONOS project. I recommend to run the code in ONOS virtual machine. You can find instructions on installation [here](https://wiki.onosproject.org/display/ONOS/Basic+ONOS+Tutorial). 
-See [this tutorial](https://wiki.onosproject.org/display/ONOS/Packet+Optical+Tutorial) on ONOS webpage for the full tutorial.
+This python code creates optical and packet network connected through Tap interface.  Note that it uses the [opticalUtils.py](https://github.com/Ehsan70/Mininet_LINC_script/blob/master/opticalUtils.py) library which is written by ONOS project. 
+- I recommend to run the code in ONOS virtual machine. You can find instructions on installation [here](https://wiki.onosproject.org/display/ONOS/Basic+ONOS+Tutorial). 
+- See [this tutorial](https://wiki.onosproject.org/display/ONOS/Packet+Optical+Tutorial) on ONOS webpage for the full tutorial.
 
 #### SimpleOptTopoScratch.py 
 This file is used for `POX_iControl_LINC-OE.md` tutorial. It constructs the packet layer of the network and connects it to the tap interfaces. 
@@ -56,7 +60,7 @@ This file is used for `POX_iControl_LINC-OE.md` tutorial. It constructs the pack
 #### TapSetup.bash
 This file creates X number of Tap interfaces. Where the script gets a number of tap interfaces (X) from the command line (i.e. args).The script takes two arguments: The first one is the number (int) of tap ionterfaces to be created. The second one (string) can take two values: 'up' or 'down'.
 - up : for bringing the tap interface up"
-- down : for bringing the tap interface down"
+- down : for bringing the tap interface down" </br>
 
 It can be used for big topologies. Below is the example commands to execute the script:  
  - Below creates 'tap1' and 'tap2' and it brings them up. </br>
