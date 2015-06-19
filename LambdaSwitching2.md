@@ -21,11 +21,12 @@ Doing [this tutorial](https://github.com/Ehsan70/Mininet_LINC_script/blob/master
  > rel/icontrol/bin/icontrol console
  ```
  The iControl starts and listens on 0.0.0.0:6653 </br>
- b. Clearting the tap interfaces: 
-For this section I have used a bash script that takes care of tap interfaces. 
-```shell
-sudo bash TapSetup.bash 7 up
-```
+ b. Clearting the tap interfaces: </br>
+ For this section I have created a bash script that takes care of tap interfaces. 
+ ```shell
+ sudo bash TapSetup.bash 7 up
+ ```
+ The first argument is the number of tap interfaces and the second one is `up` which also brings the interfaces up. 
  c. Set up the `sys.config` file: 
  `rel/files/sys.config` file for the network shown above should looks as following:
  ```erlang
@@ -122,24 +123,6 @@ sudo bash TapSetup.bash 7 up
  ```shell
  > make rel && sudo rel/linc/bin/linc console
  ```
- e. Add some flows to the optical switches. 
- Type the following commands in the iControl window:
- ```erlang
- iControl> iof:oe_flow_tw(2,100,1,2,20).
- iControl> iof:oe_flow_ww(1,100,1,20,2,20).
- iControl> iof:oe_flow_wt(3,100,1,20,2).
- 
- iControl> iof:oe_flow_wt(2,100,2,20,1).
- iControl> iof:oe_flow_ww(1,100,2,20,1,20).
- iControl> iof:oe_flow_tw(3,100,2,1,20).
- ```
- > Note that you need to add flows for both directions. 
- 
- So now if put stuff (packets) in one of the tap interfaces (using tcpreply) it will apear on the tap. 
- 
- > Follow the LINCoe_and_iControl.md tutorial to check if you have done all the steps right. 
- 
-
 
 ### setting up the packet network ###
  a. Run POX 
@@ -159,7 +142,6 @@ sudo bash TapSetup.bash 7 up
  Here is the topolgu of what we have right now:
  ![Alt text](resources/ComplexMultiTopo.jpg?raw=true  "Multi Layer Network")
 #  2. performing Lambda switching
-## Experminet One ##
 Now the optical and packet network are ready and connected. 
 If you run `pingall` on mininet CLI, all of the packets should be droped. 
 ```
@@ -181,75 +163,48 @@ iControl> iof:switches().
 ```
 The bove with return something like: 
 ```
-(icontrol@127.0.0.1)1>  iof:switches().
+(icontrol@127.0.0.1)1> iof:switches().
 Switch-Key DatapathId                       IpAddr            Version
 ---------- -------------------------------- ----------------- -------
-*1         00:00:00:00:00:01:00:01          {127,0,0,1}       4      
- 2         00:00:00:00:00:01:00:03          {127,0,0,1}       4      
- 3         00:00:00:00:00:01:00:02          {127,0,0,1}       4      
+*1         00:00:00:00:00:01:00:04          {127,0,0,1}       4      
+ 2         00:00:00:00:00:01:00:02          {127,0,0,1}       4      
+ 3         00:00:00:00:00:01:00:03          {127,0,0,1}       4      
+ 4         00:00:00:00:00:01:00:01          {127,0,0,1}       4      
 ok
+
 ```
-The first line means: the switch with Datapath ID (DPID) of 00:00:00:00:00:01:00:02 has the switch key value of 1. The second and third can be observed similarly. </br>
+The first line means: the switch with Datapath ID (DPID) of 00:00:00:00:00:01:00:04 has the switch key value of 1. The second and third can be observed similarly. </br>
 > Note that the follwoing code may need to be changed based on switch keys. 
 
-Now, let's add some flows such that h1 can ping h7. </br>
+Now, let's add some flows: 
+<b> Connecting h1 to h7 -> purpple channel <b></br>
 ```erlang
- iControl> iof:oe_flow_tw(1,100,1,4,20).
- iControl> iof:oe_flow_ww(3,100,1,20,3,20).
- iControl> iof:oe_flow_wt(2,100,1,20,3).
-```
-The above would create one side of the path from h1 to h7.</br>
-```erlang
- iControl> iof:oe_flow_wt(1,100,4,20,1).  
- iControl> iof:oe_flow_ww(3,100,3,20,1,20). 
- iControl> iof:oe_flow_tw(2,100,3,1,20). 
- ```
-Now, if you try `pingall` only pings between h1 and h7 succeed. </br>
-```
-mininet> pingall
-*** Ping: testing ping reachability
-h1 -> X X X X X h7 
-h2 -> X X X X X X 
-h3 -> X X X X X X 
-h4 -> X X X X X X 
-h5 -> X X X X X X 
-h6 -> X X X X X X 
-h7 -> h1 X X X X X 
-*** Results: 95% dropped (2/42 received)
-```
-
-## Experminet Two ##
-We already have the flows for purpple channel. 
-Let's add more flows for brown channel:
-```erlang
- iControl> iof:oe_flow_tw(1,100,2,4,40).
- iControl> iof:oe_flow_wt(3,100,1,40,2).
+ iControl> iof:oe_flow_tw(4,100,1,4,20).
+ iControl> iof:oe_flow_ww(2,100,1,20,3,20).
+ iControl> iof:oe_flow_wt(3,100,1,20,3).
  
- iControl> iof:oe_flow_wt(1,100,4,40,2).  
- iControl> iof:oe_flow_tw(3,100,2,1,40). 
-```
-So far we have two circuit and therefor a ping from h1 to h7 and from h2 to h4 must work. Bellow is the outpur of pingall which makes sense: 
-```
-mininet> pingall
-*** Ping: testing ping reachability
-h1 -> X X X X X h7 
-h2 -> X X h4 X X X 
-h3 -> X X X X X X 
-h4 -> X h2 X X X X 
-h5 -> X X X X X X 
-h6 -> X X X X X X 
-h7 -> h1 X X X X X 
-*** Results: 90% dropped (4/42 received)
-```
-Now for the dark yellow channel: 
-```erlang
- iControl> iof:oe_flow_tw(1,100,3,4,30).
- iControl> iof:oe_flow_ww(3,100,1,30,3,30).
- iControl> iof:oe_flow_wt(2,100,1,30,2).
+ iControl> iof:oe_flow_wt(4,100,4,20,1).  
+ iControl> iof:oe_flow_ww(2,100,3,20,1,20). 
+ iControl> iof:oe_flow_tw(3,100,3,1,20). 
+ ```
 
- iControl> iof:oe_flow_wt(1,100,4,30,3).  
- iControl> iof:oe_flow_ww(3,100,3,30,1,30). 
- iControl> iof:oe_flow_tw(2,100,2,1,30). 
+<b> Connecting h2 to h4 -> Brown channel <b></br>
+```erlang
+ iControl> iof:oe_flow_tw(4,100,2,4,40).
+ iControl> iof:oe_flow_wt(2,100,1,40,2).
+ 
+ iControl> iof:oe_flow_wt(4,100,4,40,2).  
+ iControl> iof:oe_flow_tw(2,100,2,1,40). 
+```
+<c> Connecting h3 to h6 -> Orange/yellow channel <b></br>
+```erlang
+ iControl> iof:oe_flow_tw(4,100,3,4,30).
+ iControl> iof:oe_flow_ww(2,100,1,30,3,30).
+ iControl> iof:oe_flow_wt(3,100,1,30,2).
+
+ iControl> iof:oe_flow_wt(4,100,4,30,3).  
+ iControl> iof:oe_flow_ww(2,100,3,30,1,30). 
+ iControl> iof:oe_flow_tw(3,100,2,1,30). 
  ```  
 With the above set of flows, `pingall` should return: 
 ```
@@ -264,3 +219,19 @@ h6 -> X X h3 X X X
 h7 -> h1 X X X X X 
 *** Results: 85% dropped (6/42 received)
 ```
+How about green channel? It uses the same channel as oragne channel. Both have channel 30. 
+
+```erlang
+ iControl> iof:oe_flow_tw(4,100,3,4,10).
+ iControl> iof:oe_flow_ww(2,100,1,10,4,30).
+ iControl> iof:oe_flow_wt(1,100,1,30,2).
+
+ iControl> iof:oe_flow_wt(4,100,4,10,3).  
+ iControl> iof:oe_flow_ww(2,100,4,30,1,10). 
+ iControl> iof:oe_flow_tw(1,100,2,1,30). 
+```
+
+
+
+
+
