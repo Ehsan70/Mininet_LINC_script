@@ -22,7 +22,7 @@ Doing [this tutorial](https://github.com/Ehsan70/Mininet_LINC_script/blob/master
  ```
  The iControl starts and listens on 0.0.0.0:6653 </br>
  b. Clearting the tap interfaces: </br>
- For this section I have created a bash script that takes care of tap interfaces. 
+ For this section I have created a bash script called `Mininet_LINC_script/TapSetup.bash` that takes care of tap interfaces. 
  ```shell
  sudo bash TapSetup.bash 7 up
  ```
@@ -174,21 +174,10 @@ ok
 
 ```
 The first line means: the switch with Datapath ID (DPID) of 00:00:00:00:00:01:00:04 has the switch key value of 1. The second and third can be observed similarly. </br>
-> Note that the follwoing code may need to be changed based on switch keys. 
+> Note that the follwoing code may need to be changed based on switch keys. </br>
 
-Now, let's add some flows: 
-<b> Connecting h1 to h7 -> purpple channel <b></br>
-```erlang
- iControl> iof:oe_flow_tw(4,100,1,4,20).
- iControl> iof:oe_flow_ww(2,100,1,20,3,20).
- iControl> iof:oe_flow_wt(3,100,1,20,3).
- 
- iControl> iof:oe_flow_wt(4,100,4,20,1).  
- iControl> iof:oe_flow_ww(2,100,3,20,1,20). 
- iControl> iof:oe_flow_tw(3,100,3,1,20). 
- ```
-
-<b> Connecting h2 to h4 -> Brown channel <b></br>
+Now, let's add some flows:
+<b> Connecting h2 to h4 -> Brown channel </b></br>
 ```erlang
  iControl> iof:oe_flow_tw(4,100,2,4,40).
  iControl> iof:oe_flow_wt(2,100,1,40,2).
@@ -196,7 +185,7 @@ Now, let's add some flows:
  iControl> iof:oe_flow_wt(4,100,4,40,2).  
  iControl> iof:oe_flow_tw(2,100,2,1,40). 
 ```
-<c> Connecting h3 to h6 -> Orange/yellow channel <b></br>
+<b> Connecting h3 to h6 -> Orange/yellow channel </b></br>
 ```erlang
  iControl> iof:oe_flow_tw(4,100,3,4,30).
  iControl> iof:oe_flow_ww(2,100,1,30,3,30).
@@ -210,27 +199,39 @@ With the above set of flows, `pingall` should return:
 ```
 mininet> pingall
 *** Ping: testing ping reachability
-h1 -> X X X X X h7 
+h1 -> X X X X X X 
 h2 -> X X h4 X X X 
 h3 -> X X X X h6 X 
 h4 -> X h2 X X X X 
 h5 -> X X X X X X 
 h6 -> X X h3 X X X 
-h7 -> h1 X X X X X 
-*** Results: 85% dropped (6/42 received)
+h7 -> X X X X X X 
+*** Results: 90% dropped (4/42 received)
 ```
-How about green channel? It uses the same channel as oragne channel. Both have channel 30. 
-
+How about green channel? It uses the same channel as oragne channel. Both have channel 30. We need ti use lambda switching:.
 ```erlang
- iControl> iof:oe_flow_tw(4,100,3,4,10).
+ iControl> iof:oe_flow_tw(4,100,1,4,10).
  iControl> iof:oe_flow_ww(2,100,1,10,4,30).
  iControl> iof:oe_flow_wt(1,100,1,30,2).
 
- iControl> iof:oe_flow_wt(4,100,4,10,3).  
+ iControl> iof:oe_flow_wt(4,100,4,10,1).  
  iControl> iof:oe_flow_ww(2,100,4,30,1,10). 
  iControl> iof:oe_flow_tw(1,100,2,1,30). 
 ```
+With the above three sets of flows we'll get the below from `pingall` command:
+```
+mininet> pingall
+*** Ping: testing ping reachability
+h1 -> X X X h5 X X 
+h2 -> X X h4 X X X 
+h3 -> X X X X h6 X 
+h4 -> X h2 X X X X 
+h5 -> h1 X X X X X 
+h6 -> X X h3 X X X 
+h7 -> X X X X X X 
+*** Results: 85% dropped (6/42 received)
 
+```
 
 
 
