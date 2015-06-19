@@ -9,7 +9,7 @@ Doing [this tutorial](https://github.com/Ehsan70/Mininet_LINC_script/blob/master
 <b>Road Map: </b>This document has two sections for setup: 
 
  1. setting up the optical and packet network </br>
- 2. performing Lambda switching
+ 2. runs some experiments
 
 <b>Notations:</b>
  - `>` means the linuc command line <br>
