@@ -140,9 +140,9 @@ Doing [this tutorial](https://github.com/Ehsan70/Mininet_LINC_script/blob/master
   The pox will start up and listens on 0.0.0.0:6633  </br></br>
  b. Move to the directory where this repository is cloned into, and tun python topo using python API. 
   ```shell
-  > sudo -E python SimpleOptTopoScratch.py
+  > sudo -E python ComplexMultiTopo.py
   ```
-  The `SimpleOptTopoScratch.py` file will create a packet topolgy which includes two switches and two host. 
+  The `ComplexMultiTopo.py` file will create a packet topolgy which includes two switches and two host. 
   The switches are connected to hosts on one end and on the other end they are connected to tap interfaces. 
   Note that tap interfaces are connected linc-oe switches.  
  
