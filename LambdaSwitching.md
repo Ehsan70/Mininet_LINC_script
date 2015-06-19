@@ -178,8 +178,8 @@ Now, let's add some flows such that h1 can ping h6. </br>
 ```
 The above would create one side of the path from h1 to h6.</br>
 ```erlang
- iControl> iof:oe_flow_wt(2,100,2,20,1). not done 
- iControl> iof:oe_flow_ww(1,100,2,20,1,20).not done 
- iControl> iof:oe_flow_tw(3,100,2,1,20).not done 
+ iControl> iof:oe_flow_wt(3,100,4,20,1).  
+ iControl> iof:oe_flow_ww(1,100,3,20,1,20). 
+ iControl> iof:oe_flow_tw(2,100,3,1,20). 
  ```
-Now, if you try `pingall` 100 percent of the packets will drop. </br>
+Now, if you try `pingall` only pings between h1 and h6 can succed. </br>
