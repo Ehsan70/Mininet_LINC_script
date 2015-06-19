@@ -1,4 +1,4 @@
-<b>Goal</b>: First quickly setting up LINC-OE simple optical topology controlled by iControl and a packet simple topology controlled by POX. Then trying to perform Lambda Switching on one of the optical switches. </br>
+<b>Goal</b>: First quickly setting up LINC-OE simple optical topology controlled by iControl and a packet simple topology controlled by POX. </br>
 
 <b>Requirements:</b>
 A basic knowlege of LINC-OE, TAP interfaces, POX, Erlang language , Lambda Switchin and linux CLI is required. 
