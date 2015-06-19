@@ -38,6 +38,7 @@ class OpticalTopoScratch(Topo):
         h6 = self.addHost('h6')
         h7 = self.addHost('h7')
 
+        # Adding switches
         s1 = self.addSwitch('s1', dpid="0000ffff00000001")
         s2 = self.addSwitch('s2', dpid="0000ffff00000002")
         s3 = self.addSwitch('s3', dpid="0000ffff00000003")
