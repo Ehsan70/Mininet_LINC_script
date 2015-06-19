@@ -139,7 +139,7 @@ as following:
 ```
 Here is what we have: 
 
-![Alt text](/OpticalTopo.jpg?raw=true  "Pure Optical Topology")
+![Alt text](resources/OpticalTopo.jpg?raw=true  "Pure Optical Topology")
 
 #### Reminder ####
 
