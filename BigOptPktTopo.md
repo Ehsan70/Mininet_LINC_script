@@ -1,4 +1,4 @@
-<b>Goal</b>: First quickly setting up LINC-OE simple optical topology controlled by iControl and a packet simple topology controlled by POX. </br>
+<b>Goal</b>: First quickly setting up LINC-OE simple optical topology controlled by iControl and a packet simple topology controlled by POX. Then couple of experiments are performed.</br>
 
 <b>Requirements:</b>
 A basic knowlege of LINC-OE, TAP interfaces, POX, Erlang language , Lambda Switchin and linux CLI is required. 
@@ -11,6 +11,9 @@ Doing [this tutorial](https://github.com/Ehsan70/Mininet_LINC_script/blob/master
  1. setting up the optical and packet network </br>
  2. performing Lambda switching
 
+<b>Notations:</b>
+ - `>` means the linuc command line <br>
+ - `iControl>` Means the iControll command line
 
 # 1. setting up the optical and packet network 
 
@@ -21,13 +24,12 @@ Doing [this tutorial](https://github.com/Ehsan70/Mininet_LINC_script/blob/master
  > rel/icontrol/bin/icontrol console
  ```
  The iControl starts and listens on 0.0.0.0:6653 </br>
- b. Clearting the tap interfaces: 
+ b. Clearting the tap interfaces: <\br>
+ For this section I have created a bash script called `Mininet_LINC_script/TapSetup.bash` that takes care of tap interfaces. 
  ```shell
- > sudo tunctl -t tap0
- > sudo tunctl -t tap1
- > sudo ip link set dev tap0 up
- > sudo ip link set dev tap1 up
+ > sudo bash TapSetup.bash 7 up
  ```
+ The first argument is the number of tap interfaces and the second one is `up` which also brings the interfaces up.
  c. Set up the `sys.config` file: 
  `rel/files/sys.config` file for the network shown above should looks as following:
  ```erlang
