@@ -255,13 +255,9 @@ h7 -> h1 X X X X X
 *** Results: 85% dropped (6/42 received)
 ```
 
-## Experminet Three: Lambda Switching ##
-First erase all the flows. 
-```erlang
-iControl> iof:clear_flows(1,0).
-iControl> iof:clear_flows(2,0).
-iControl> iof:clear_flows(3,0).
-```
+
+
+
 
 
 
