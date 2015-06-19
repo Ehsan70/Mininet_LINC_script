@@ -140,7 +140,7 @@ Doing [this tutorial](https://github.com/Ehsan70/Mininet_LINC_script/blob/master
   Note that tap interfaces are connected linc-oe switches.  
  
  Here is the topolgu of what we have right now:
- ![Alt text](resources/ComplexMultiTopo.jpg?raw=true  "Multi Layer Network")
+ ![Alt text](resources/ComplexMultiTopoWithSwitching.jpg?raw=true  "Multi Layer Network")
 #  2. performing Lambda switching
 Now the optical and packet network are ready and connected. 
 If you run `pingall` on mininet CLI, all of the packets should be droped. 
