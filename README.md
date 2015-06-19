@@ -2,16 +2,23 @@
 Contains script that creates optical and packet topologies using Mininet, iControll and LINC.
 
 # Files #
-#### BigOptTopo.py ####
+#### BigOptTopo.py
 TODO
 
-#### Install_tcpreply.md ####
+#### BigOptPktTopo.md 
+This tutorial sets up LINC-OE simple optical topology controlled by iControl and a packet simple topology controlled by POX. Some flows are addded to provide partiall connectivity within network.   
+![Alt text](resources/ComplexMultiTopo.jpg?raw=true  "Big Multi Layer Network with more flows")
+#### Install_tcpreply.md
 This file contains instructions on installing tCP reply on Ubuntu OS. TCPreply is used in POX_iControl_LINC-OE.md and LINCoe_and_iControl.md tutorials.
 
 #### LINCoe_and_iControl.md
 This tutorial contains steps to create a pure optical network with linc-oe switches and controlled by iControll. TCPreply is used to send packets into the tap interfaces. </br>
 Here is the topology created by this tutorial: 
 ![Alt text](resources/OpticalTopo.jpg?raw=true  "Pure Optical Topology")
+
+#### LambdaSwitching.md
+First quickly setting up LINC-OE simple optical topology controlled by iControl and a simple packet topology controlled by POX. Then trying to perform Lambda Switching on one of the optical switches. 
+![Alt text](resources/ComplexMultiTopoWithSwitching.jpg?raw=true  "Multi Layer Network and Lambda Switching")
 
 #### POX_iControl_LINC-OE.md
 This tutorial sets up LINC-OE based simple optical topology controlled by iControl and a simple packet topology controlled by POX controller. This tutorial uses the python file `SimpleOptTopoScratch.py`.
