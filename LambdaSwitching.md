@@ -163,7 +163,6 @@ h5 -> X X X X X X
 h6 -> X X X X X X 
 h7 -> X X X X X X 
 *** Results: 100% dropped (0/42 received)
-
 ```
 Of course you can have wireshark probing any of the interfaces.</br>
 Before we add flows we need to check what the switch key is for each optical switch. That can be done using 
@@ -182,6 +181,7 @@ ok
 ```
 The first line means: the switch with Datapath ID (DPID) of 00:00:00:00:00:01:00:02 has the switch key value of 1. The second and third can be observed similarly. </br>
 > Note that the follwoing code may need to be changed based on switch keys. 
+
 Now, let's add some flows such that h1 can ping h7. </br>
 ```erlang
  iControl> iof:oe_flow_tw(1,100,1,4,20).
