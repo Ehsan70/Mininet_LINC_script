@@ -152,7 +152,19 @@ Doing [this tutorial](https://github.com/Ehsan70/Mininet_LINC_script/blob/master
 ## Experminet One ##
 Now the optical and packet network are ready and connected. 
 If you run `pingall` on mininet CLI, all of the packets should be droped. 
+```
+mininet> pingall
+*** Ping: testing ping reachability
+h1 -> X X X X X X 
+h2 -> X X X X X X 
+h3 -> X X X X X X 
+h4 -> X X X X X X 
+h5 -> X X X X X X 
+h6 -> X X X X X X 
+h7 -> X X X X X X 
+*** Results: 100% dropped (0/42 received)
 
+```
 Of course you can have wireshark probing any of the interfaces.</br>
 Before we add flows we need to check what the switch key is for each optical switch. That can be done using 
 ```erlang
@@ -160,26 +172,38 @@ iControl> iof:switches().
 ```
 The bove with return something like: 
 ```
-iControl> iof:switches().                 
+(icontrol@127.0.0.1)1>  iof:switches().
 Switch-Key DatapathId                       IpAddr            Version
 ---------- -------------------------------- ----------------- -------
-*1         00:00:00:00:00:01:00:02          {127,0,0,1}       4      
+*1         00:00:00:00:00:01:00:01          {127,0,0,1}       4      
  2         00:00:00:00:00:01:00:03          {127,0,0,1}       4      
- 3         00:00:00:00:00:01:00:01          {127,0,0,1}       4      
+ 3         00:00:00:00:00:01:00:02          {127,0,0,1}       4      
 ok
 ```
 The first line means: the switch with Datapath ID (DPID) of 00:00:00:00:00:01:00:02 has the switch key value of 1. The second and third can be observed similarly. </br>
 > Note that the follwoing code may need to be changed based on switch keys. 
-Now, let's add some flows such that h1 can ping h6. </br>
+Now, let's add some flows such that h1 can ping h7. </br>
 ```erlang
- iControl> iof:oe_flow_tw(3,100,1,4,20).
- iControl> iof:oe_flow_ww(1,100,1,20,3,20).
+ iControl> iof:oe_flow_tw(1,100,1,4,20).
+ iControl> iof:oe_flow_ww(3,100,1,20,3,20).
  iControl> iof:oe_flow_wt(2,100,1,20,3).
 ```
-The above would create one side of the path from h1 to h6.</br>
+The above would create one side of the path from h1 to h7.</br>
 ```erlang
- iControl> iof:oe_flow_wt(3,100,4,20,1).  
- iControl> iof:oe_flow_ww(1,100,3,20,1,20). 
+ iControl> iof:oe_flow_wt(1,100,4,20,1).  
+ iControl> iof:oe_flow_ww(3,100,3,20,1,20). 
  iControl> iof:oe_flow_tw(2,100,3,1,20). 
  ```
-Now, if you try `pingall` only pings between h1 and h6 can succed. </br>
+Now, if you try `pingall` only pings between h1 and h7 succeed. </br>
+```
+mininet> pingall
+*** Ping: testing ping reachability
+h1 -> X X X X X h7 
+h2 -> X X X X X X 
+h3 -> X X X X X X 
+h4 -> X X X X X X 
+h5 -> X X X X X X 
+h6 -> X X X X X X 
+h7 -> h1 X X X X X 
+*** Results: 95% dropped (2/42 received)
+```
