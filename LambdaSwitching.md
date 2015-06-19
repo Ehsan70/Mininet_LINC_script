@@ -207,3 +207,62 @@ h6 -> X X X X X X
 h7 -> h1 X X X X X 
 *** Results: 95% dropped (2/42 received)
 ```
+
+## Experminet Two ##
+We already have the flows for purpple channel. 
+Let's add more flows for brown channel:
+```erlang
+ iControl> iof:oe_flow_tw(1,100,2,4,40).
+ iControl> iof:oe_flow_wt(3,100,1,40,2).
+ 
+ iControl> iof:oe_flow_wt(1,100,4,40,2).  
+ iControl> iof:oe_flow_tw(3,100,2,1,40). 
+```
+So far we have two circuit and therefor a ping from h1 to h7 and from h2 to h4 must work. Bellow is the outpur of pingall which makes sense: 
+```
+mininet> pingall
+*** Ping: testing ping reachability
+h1 -> X X X X X h7 
+h2 -> X X h4 X X X 
+h3 -> X X X X X X 
+h4 -> X h2 X X X X 
+h5 -> X X X X X X 
+h6 -> X X X X X X 
+h7 -> h1 X X X X X 
+*** Results: 90% dropped (4/42 received)
+```
+Now for the dark yellow channel: 
+```erlang
+ iControl> iof:oe_flow_tw(1,100,3,4,30).
+ iControl> iof:oe_flow_ww(3,100,1,30,3,30).
+ iControl> iof:oe_flow_wt(2,100,1,30,2).
+
+ iControl> iof:oe_flow_wt(1,100,4,30,3).  
+ iControl> iof:oe_flow_ww(3,100,3,30,1,30). 
+ iControl> iof:oe_flow_tw(2,100,2,1,30). 
+ ```  
+With the above set of flows, `pingall` should return: 
+```
+mininet> pingall
+*** Ping: testing ping reachability
+h1 -> X X X X X h7 
+h2 -> X X h4 X X X 
+h3 -> X X X X h6 X 
+h4 -> X h2 X X X X 
+h5 -> X X X X X X 
+h6 -> X X h3 X X X 
+h7 -> h1 X X X X X 
+*** Results: 85% dropped (6/42 received)
+```
+
+## Experminet Three: Lambda Switching ##
+First erase all the flows. 
+```erlang
+iControl> iof:clear_flows(1,0).
+iControl> iof:clear_flows(2,0).
+iControl> iof:clear_flows(3,0).
+```
+
+
+
+
