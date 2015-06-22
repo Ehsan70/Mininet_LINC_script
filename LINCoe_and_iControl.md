@@ -274,6 +274,8 @@ Dumps flows in switch with key equal to <Switch key>.
 iof:flows(<Switch key>).  
 ```
 
+### Further Functions###
+For further functions see [this .md file](https://github.com/FlowForwarding/loom/blob/c1162900fbea51ec6d989f1c2dc97a12066d319c/icontrol/README.md) from loom repository.
 
 # Additional Sources #
 This tutorial was made from a comnination of the following tutorials: 
