@@ -153,10 +153,15 @@ If `port_name` option is not provided it defaults to `Port{LOGICAL_SWITCH_PORT_N
 
 
 ## Starting LINC-OE ##
-  Build LINC-Switch and run it:
-  ```shell
+Go to the directory where the linc switch repo is cloned. For me I have it in `~/linc-oe` so:
+```shell
+$ cd ~/linc-oe
+```
+Build LINC-Switch and run it:
+```shell
   $ make rel && sudo rel/linc/bin/linc console
 ```
+Note that based on your account priviliage you may have to run it with `sudo`. 
 # Usage #
 So now you have both the linc-oe and iControll set up. Time to play with them.
 
