@@ -6,6 +6,9 @@ from mininet.log import setLogLevel
 from mininet.node import RemoteController
 from mininet.cli import CLI
 
+"""
+Note that this file uses some of the libraries provided by ONOS. The library takes care of seting up the LINC (optical switches).
+"""
 
 class SmallOptTopo(Topo):
     def build(self):
