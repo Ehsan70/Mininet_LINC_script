@@ -258,7 +258,7 @@ So now we have created the path from tap0 to tap1. Lets put some packet in tap0 
  
  4. Send ping through tap0  
 
-    `$ sudo tcpreplay -i tap0 linc-oe/pcap.data/ping.pcap`
+    `$ sudo tcpreplay -i tap0 ~/linc-oe/pcap.data/ping.pcap`
     > If tcpreply is not installed, follow these instructions:
     > https://github.com/Ehsan70/Mininet_LINC_script/blob/master/Install_tcpreply.md
 
